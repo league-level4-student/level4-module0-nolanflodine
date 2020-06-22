@@ -29,7 +29,7 @@ public class GridPanel extends JPanel{
 		this.pixelWidth = windowWidth / cols;
 		this.pixelHeight = windowHeight / rows;
 		
-		color = Color.BLACK;
+		color = Color.WHITE;
 		
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		
@@ -54,8 +54,9 @@ public class GridPanel extends JPanel{
 		//   of the pixel that was clicked. *HINT* Use the pixel's dimensions.
 		for (int i = 0; i < p.length; i++) {
 			for (int j = 0; j < p[i].length; j++) {
-				if(mouseX>=p[i][j].x&&mouseX<p[i][j].x+pixelWidth&&mouseY>=p[i][j].y&&mouseY<p[i][j].y+pixelHeight) {
-					//idk how to change color
+				if(mouseX>=p[i][j].x/pixelWidth&&mouseX<p[i][j].x/pixelWidth+pixelWidth&&mouseY>=p[i][j].y/pixelHeight&&mouseY<p[i][j].y/pixelHeight+pixelHeight) {
+					System.out.println("running");
+					p[i][j].color = color;
 				}
 			}
 		}
@@ -69,8 +70,8 @@ public class GridPanel extends JPanel{
 		//   Then, use drawRect to add a grid pattern to your display.
 		for (int i = 0; i < p.length; i++) {
 			for (int j = 0; j < p[i].length; j++) {
-				g.fillRect(i, j, pixelWidth, pixelHeight);
-				g.drawRect(i, j, pixelWidth, pixelHeight);
+				g.fillRect(i*pixelWidth, j*pixelHeight, pixelWidth, pixelHeight);
+				g.drawRect(i*pixelWidth, j*pixelHeight, pixelWidth, pixelHeight);
 			}
 		}
 	}
