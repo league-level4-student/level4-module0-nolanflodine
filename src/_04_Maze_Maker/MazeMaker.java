@@ -5,8 +5,13 @@ import java.util.Random;
 import java.util.Stack;
 
 
-public class MazeMaker{
+public class MazeMaker extends Maze{
 	
+	public MazeMaker(int w, int h) {
+		super(w, h);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static int width;
 	private static int height;
 	
@@ -22,10 +27,12 @@ public class MazeMaker{
 		maze = new Maze(width, height);
 		
 		//4. select a random cell to start
-		
+		Random r = new Random();
+		int r1 = r.nextInt(width);
+		int r2 = r.nextInt(height);
 		
 		//5. call selectNextPath method with the randomly selected cell
-		
+		selectNextPath(c[r1][r2]);
 		
 		return maze;
 	}
