@@ -104,9 +104,14 @@ Cell[][] c;
 		for (int i = 0; i < c.length; i++) {
 			for (int j = 0; j < c[i].length; j++) {
 				livingNeighbors[i][j] = getLivingNeighbors(i, j);
-				c[i][j].liveOrDie(livingNeighbors[i][j]);
 			}
 		}
+		for (int k = 0; k < c.length; k++) {
+			for(int l = 0; l<c[k].length; l++) {
+				c[k][l].liveOrDie(livingNeighbors[k][l]);
+			}
+		}
+
 		//8. check if each cell should live or die
 		
 		
@@ -130,7 +135,7 @@ Cell[][] c;
 		if(x<WIDTH&&y>0&&c[x+1][y-1].isAlive) {
 			total++;
 		}
-		if(y>0&&c[x][y-1].isAlive) {
+		if(x>0&&c[x-1][y].isAlive) {
 			total++;
 		}
 		if(c[x][y].isAlive) {
