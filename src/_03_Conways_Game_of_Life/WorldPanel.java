@@ -132,25 +132,22 @@ Cell[][] c;
 		if(y>0&&c[x][y-1].isAlive) {
 			total++;
 		}
-		if(x<WIDTH&&y>0&&c[x+1][y-1].isAlive) {
+		if(x<cellsPerRow - 1.&&y>0&&c[x+1][y-1].isAlive) {
 			total++;
 		}
 		if(x>0&&c[x-1][y].isAlive) {
 			total++;
 		}
-		if(c[x][y].isAlive) {
+		if(x<cellsPerRow - 1.&&c[x+1][y].isAlive) {
 			total++;
 		}
-		if(x<WIDTH&&c[x+1][y].isAlive) {
+		if(x>0&&y<cellsPerRow - 1.&&c[x-1][y+1].isAlive) {
 			total++;
 		}
-		if(x>0&&y<HEIGHT&&c[x-1][y+1].isAlive) {
+		if(y<cellsPerRow - 1.&&c[x][y+1].isAlive) {
 			total++;
 		}
-		if(y<HEIGHT&&c[x][y+1].isAlive) {
-			total++;
-		}
-		if(x<WIDTH&&y<HEIGHT&&c[x+1][y+1].isAlive) {
+		if(x<cellsPerRow - 1.&&y<cellsPerRow - 1.&&c[x+1][y+1].isAlive) {
 			total++;
 		}
 		return total;

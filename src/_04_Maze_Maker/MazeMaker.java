@@ -33,7 +33,7 @@ public class MazeMaker extends Maze{
 		 r2 = r.nextInt(height);
 		
 		//5. call selectNextPath method with the randomly selected cell
-		selectNextPath(c[r1][r2]);
+		selectNextPath(maze.getCell(r1, r2));
 		
 		return maze;
 	}
@@ -41,21 +41,20 @@ public class MazeMaker extends Maze{
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
-		c[r1][r2].hasBeenVisited();
+		maze.getCell(r1,r2).hasBeenVisited();
 		//B. Get an ArrayList of unvisited neighbors using the current cell and the method below
 		
  		//C. if has unvisited neighbors,
-		//ArrayList<Cell> n = getUnvisitedNeighbors(currentCell);
 		if(getUnvisitedNeighbors(currentCell).size()>0) {
 			//C1. select one at random.
 			r1 = randGen.nextInt(getUnvisitedNeighbors(currentCell).size());
 			r2 = randGen.nextInt(getUnvisitedNeighbors(currentCell).size());
 			//C2. push it to the stack
-		uncheckedCells.push(c[r1][r2]);
+		uncheckedCells.push(maze.getCell(r1,r2));
 			//C3. remove the wall between the two cells
-			removeWalls(c[r1][r2], currentCell);
+			removeWalls(maze.getCell(r1,r2), currentCell);
 			//C4. make the new cell the current cell and mark it as visited
-		currentCell = c[r1][r2];
+		currentCell = maze.getCell(r1,r2);
 		currentCell.hasBeenVisited();
 			//C5. call the selectNextPath method with the current cell
 		selectNextPath(currentCell);
@@ -81,7 +80,17 @@ public class MazeMaker extends Maze{
 	//   This method will check if c1 and c2 are adjacent.
 	//   If they are, the walls between them are removed.
 	private static void removeWalls(Cell c1, Cell c2) {
-		if(c1.getX()+100==c2.getX()||c1.getX()-100==c2.getX()||c1.getY()+100==c2.getY()||c1.getY()-100==c2.getY()) { // checks if they are adjacent I think
+		if(c1.getX()+100==c2.getX()) {
+			c1.setEastWall(false);
+		}
+		if(c1.getX()-100==c2.getX()) {
+			c1.setWestWall(false);
+		}
+		if(c1.getY()+100==c2.getY()) {
+			c1.setSouthWall(false);
+		}
+		if(c1.getY()-100==c2.getY()) {
+			c1.setNorthWall(false);
 		}
 	}
 	
@@ -89,6 +98,8 @@ public class MazeMaker extends Maze{
 	//   Any unvisited neighbor of the passed in cell gets added
 	//   to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {  
-		return null;
+		ArrayList<Cell> n = new ArrayList<Cell>();
+		//Still not sure how to identify certain cells
+		return n;
 	}
 }

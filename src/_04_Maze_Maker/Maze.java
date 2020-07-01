@@ -1,9 +1,9 @@
 package _04_Maze_Maker;
 import java.awt.Graphics;
 
-public class Maze {
+public class Maze{
 	//1. Create a 2D array of cells. Don't initialize it.
-	static Cell[][] c;
+	private Cell[][] c;
 	private int width;
 	private int height;
 
@@ -32,7 +32,7 @@ public class Maze {
 	}
 	
 	//4b. This method returns the selected cell.
-	public Cell getCell(int x, int y){
+	public  Cell getCell(int x, int y){
 		return  c[x][y];
 	}
 
