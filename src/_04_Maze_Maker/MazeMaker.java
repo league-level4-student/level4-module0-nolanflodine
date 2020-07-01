@@ -41,24 +41,27 @@ public class MazeMaker extends Maze{
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
-		maze.getCell(r1,r2).hasBeenVisited();
+		System.out.println("x"+currentCell.getX());
+		System.out.println("y"+currentCell.getY());
+		maze.getCell(currentCell.getX(),currentCell.getY()).setBeenVisited(true);
 		//B. Get an ArrayList of unvisited neighbors using the current cell and the method below
-		
+		ArrayList<Cell> n = getUnvisitedNeighbors(currentCell);
  		//C. if has unvisited neighbors,
-		if(getUnvisitedNeighbors(currentCell).size()>0) {
+		if(n.size()>0) {
 			//C1. select one at random.
-			r1 = randGen.nextInt(getUnvisitedNeighbors(currentCell).size());
-			r2 = randGen.nextInt(getUnvisitedNeighbors(currentCell).size());
+			r1 = randGen.nextInt(n.size());
+			Cell cel = n.get(r1);
 			//C2. push it to the stack
-		uncheckedCells.push(maze.getCell(r1,r2));
+		uncheckedCells.push(cel);
 			//C3. remove the wall between the two cells
-			removeWalls(maze.getCell(r1,r2), currentCell);
+			removeWalls(cel, currentCell);
 			//C4. make the new cell the current cell and mark it as visited
-		currentCell = maze.getCell(r1,r2);
-		currentCell.hasBeenVisited();
+		currentCell = cel;
+		currentCell.setBeenVisited(true);
 			//C5. call the selectNextPath method with the current cell
 		selectNextPath(currentCell);
 		}
+		else {
 			
 		//D. if all neighbors are visited
 		if(getUnvisitedNeighbors(currentCell).size()==0) {
@@ -72,6 +75,7 @@ public class MazeMaker extends Maze{
 					selectNextPath(p);
 			}
 		}
+		}
 			
 		
 	}
@@ -80,17 +84,21 @@ public class MazeMaker extends Maze{
 	//   This method will check if c1 and c2 are adjacent.
 	//   If they are, the walls between them are removed.
 	private static void removeWalls(Cell c1, Cell c2) {
-		if(c1.getX()+100==c2.getX()) {
+		if(c1.getX()+1==c2.getX()&&c1.getY()==c2.getY()) {
 			c1.setEastWall(false);
+			c2.setWestWall(false);
 		}
-		if(c1.getX()-100==c2.getX()) {
+		if(c1.getX()-1==c2.getX()&&c1.getY()==c2.getY()) {
 			c1.setWestWall(false);
+			c2.setEastWall(false);
 		}
-		if(c1.getY()+100==c2.getY()) {
+		if(c1.getY()+1==c2.getY()&&c1.getX()==c2.getX()) {
 			c1.setSouthWall(false);
+			c2.setNorthWall(false);
 		}
-		if(c1.getY()-100==c2.getY()) {
+		if(c1.getY()-1==c2.getY()&&c1.getX()==c2.getX()) {
 			c1.setNorthWall(false);
+			c2.setSouthWall(false);
 		}
 	}
 	
@@ -99,7 +107,19 @@ public class MazeMaker extends Maze{
 	//   to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {  
 		ArrayList<Cell> n = new ArrayList<Cell>();
-		//Still not sure how to identify certain cells
+		if(c.getX()+1<maze.getWidth()-1&&!maze.getCell(c.getX()+1, c.getY()).hasBeenVisited()) {
+			n.add(maze.getCell(c.getX()+1, c.getY()));
+			//System.out.println("hello");
+		}
+		if(c.getX()-1>0&&!maze.getCell(c.getX()-1, c.getY()).hasBeenVisited()) {
+			n.add(maze.getCell(c.getX()-1, c.getY()));
+		}
+		if(c.getY()<maze.getHeight()-1&&!maze.getCell(c.getX(), c.getY()+1).hasBeenVisited()) {
+			n.add(maze.getCell(c.getX(), c.getY()+1));
+		}
+		if(c.getY()>0&&!maze.getCell(c.getX(), c.getY()-1).hasBeenVisited()) {
+			n.add(maze.getCell(c.getX(), c.getY()-1));
+		}
 		return n;
 	}
 }
