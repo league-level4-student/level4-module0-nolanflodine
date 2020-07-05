@@ -41,6 +41,8 @@
 
 package extras.the_wrong_way_cow;
 
+import java.util.HashMap;
+
 public class TheWrongWayCow {
 
     public static int[] findWrongWayCow(final char[][] field) {
@@ -48,10 +50,12 @@ public class TheWrongWayCow {
         // head (letter 'c') of the wrong way cow!
         for (int i = 0; i < field.length; i++) {
 			for (int j = 0; j < field[i].length; j++) {
-				if(i>0&&field[i][j]=='c') {
-					return new int[] {i, j};
+				if(field[i][j]=='c') {
+					System.out.println("this" + field.length);
+					return new int[i];
 				}
 			}
+			
 		}
         return null;
     }

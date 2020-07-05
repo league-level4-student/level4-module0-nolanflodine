@@ -22,7 +22,10 @@ public class TheWrongWayCowTest {
       "cowo".toCharArray(),
       "coww".toCharArray(),
       "cow.".toCharArray(),
+
       };
+      System.out.println(field.length + " = length");
+
     assertArrayEquals(new int[]{3,0}, TheWrongWayCow.findWrongWayCow(show(field)));
   }
 
