@@ -41,6 +41,7 @@
 
 package extras.the_wrong_way_cow;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TheWrongWayCow {
@@ -48,15 +49,52 @@ public class TheWrongWayCow {
     public static int[] findWrongWayCow(final char[][] field) {
         // Fill in the code to return the x,y coordinate position of the
         // head (letter 'c') of the wrong way cow!
+    	ArrayList<int[]> up = new ArrayList<int[]>();
+    	ArrayList<int[]> down = new ArrayList<int[]>();
+    	ArrayList<int[]> left = new ArrayList<int[]>();
+    	ArrayList<int[]> right = new ArrayList<int[]>();
+
+    	
         for (int i = 0; i < field.length; i++) {
 			for (int j = 0; j < field[i].length; j++) {
-				if(field[i][j]=='c') {
-					System.out.println("this" + field.length);
-					return new int[i];
+				if(field[i][j]=='c'&&i<field.length-2&&field[i+1][j]=='o'&&field[i+2][j]=='w') {
+					int[] d = {j,i};
+					down.add(d);
+					}
+				if(field[i][j]=='c'&&i>2&&field[i-1][j]=='o'&&field[i-2][j]=='w') {
+					int[] u = {j,i};
+					up.add(u);
+				}
+				if(field[i][j]=='c'&&j<field[i].length-2&&field[i][j+1]=='o'&&field[i][j+2]=='w') {
+					int[] r = {j,i};
+					right.add(r);
+				}
+				if(field[i][j]=='c'&&j>2&&field[i][j-1]=='o'&&field[i][j-2]=='w') {
+					int[] l = {j,i};
+					left.add(l);
+				}
 				}
 			}
-			
-		}
+        System.out.println(right.size()+" rights");
+        System.out.println(down.size()+" downs");
+        System.out.println(left.size()+" letfs");
+        System.out.println(up.size()+" ups");
+			if(up.size()==1) {
+				return up.get(0);
+			}
+			if(down.size()==1) {
+				System.out.println(down.get(0)[0]+ " downX");
+				System.out.println(down.get(0)[1]+ " downY");
+				return down.get(0);
+			}
+			if(left.size()==1) {
+				return left.get(0);
+			}
+			if(right.size()==1) {
+				return right.get(0);
+			}
+			else {
         return null;
+			}
     }
 }
