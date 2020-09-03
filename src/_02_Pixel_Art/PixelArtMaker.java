@@ -3,14 +3,23 @@ package _02_Pixel_Art;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.swing.JFrame;
 
+import _05_Serialization.SaveData;
+
 public class PixelArtMaker implements MouseListener{
-	private JFrame window;
+	private static JFrame window;
 	private GridInputPanel gip;
-	private GridPanel gp;
-	ColorSelectionPanel csp;
+	public static GridPanel gp;
+	static ColorSelectionPanel csp;
 	
 	public void start() {
 		gip = new GridInputPanel(this);	
@@ -39,6 +48,33 @@ public class PixelArtMaker implements MouseListener{
 		new PixelArtMaker().start();
 	}
 
+	private static final String DATA_FILE = "src/_02_Pixel_Art/pixelSaved.dat";
+
+	public static void save(GridPanel data) {
+		try (FileOutputStream fos = new FileOutputStream(new File(DATA_FILE)); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+			oos.writeObject(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void load() {
+		try (FileInputStream fis = new FileInputStream(new File(DATA_FILE)); ObjectInputStream ois = new ObjectInputStream(fis)) {
+			window.remove(gp);
+			GridPanel gp2 = (GridPanel) ois.readObject();
+			gp = gp2;
+			window.add(gp);
+			window.remove(csp);
+			window.add(csp);
+			window.pack();
+			gp.repaint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// This can occur if the object we read from the file is not
+			// an instance of any recognized class
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
